@@ -1,0 +1,95 @@
+{
+    "name": "2d3d-debug",
+    "displayName": "2D/3D Debug Visualizer",
+    "description": "Visualize 2D/3D data during C++/Python debug.",
+    "version": "0.1.4",
+    "license": "MIT",
+    "publisher": "congwang",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cong/2d3d-debug"
+    },
+    "bugs": {
+        "url": "https://github.com/cong/2d3d-debug/issues"
+    },
+    "homepage": "https://github.com/cong/2d3d-debug#readme",
+    "icon": "assets/icon.png",
+    "engines": {
+        "vscode": "^1.93.0"
+    },
+    "categories": [
+        "Debuggers"
+    ],
+    "keywords": [
+        "opencv",
+        "pcl",
+        "debug",
+        "view",
+        "point cloud",
+        "c++",
+        "python",
+        "2d",
+        "3d"
+    ],
+    "main": "./dist/extension.js",
+    "activationEvents": [
+        "onCommand:extension.viewVariable"
+    ],
+    "contributes": {
+        "commands": [
+            {
+                "command": "imageViewer.viewImageFile",
+                "title": "View 2D/3D Data",
+                "category": "Image"
+            },
+            {
+                "command": "extension.viewVariable",
+                "title": "View 2D/3D Data"
+            }
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "command": "imageViewer.viewImageFile",
+                    "group": "0_top@1",
+                    "when": "resourceExtname == .jpg || resourceExtname == .jpeg || resourceExtname == .png || resourceExtname == .bmp || resourceExtname == .gif"
+                }
+            ],
+            "debug/variables/context": [
+                {
+                    "command": "extension.viewVariable",
+                    "group": "0_top@1",
+                    "when": "debugType == 'cppvsdbg' || debugType == 'cppdbg' || debugType == 'lldb' || debugType == 'debugpy' || debugType == 'python'"
+                }
+            ],
+            "debug/watch/context": [
+                {
+                    "command": "extension.viewVariable",
+                    "group": "0_top@1",
+                    "when": "debugType == 'cppvsdbg' || debugType == 'cppdbg' || debugType == 'lldb' || debugType == 'debugpy' || debugType == 'python'"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run package",
+        "compile": "npm run check-types && node esbuild.js",
+        "check-types": "tsc --noEmit",
+        "watch": "npm-run-all -p watch:*",
+        "watch:esbuild": "node esbuild.js --watch",
+        "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+        "package": "npm run check-types && node esbuild.js --production",
+        "lint": "eslint src",
+        "test": "npm run lint && npm run check-types"
+    },
+    "devDependencies": {
+        "@types/node": "20.x",
+        "@types/vscode": "^1.93.0",
+        "@typescript-eslint/eslint-plugin": "^8.3.0",
+        "@typescript-eslint/parser": "^8.3.0",
+        "esbuild": "^0.24.0",
+        "eslint": "^9.9.1",
+        "npm-run-all": "^4.1.5",
+        "typescript": "^5.5.4"
+    }
+}
